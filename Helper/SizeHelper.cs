@@ -7,6 +7,10 @@ namespace LinuxDoku.GameJam1.Game.Helper {
             return new Vector2(sizeable.Width / 2, sizeable.Height / 2);
         }
 
+        public static Vector2 TopCenter(this IHaveASize sizeable) {
+            return new Vector2(sizeable.Width / 2, 0);
+        }
+
         public static Vector2 UpperThird(this IHaveASize sizeable) {
             return new Vector2(sizeable.Width / 2, (sizeable.Height / 3) * 0.5f);
         }

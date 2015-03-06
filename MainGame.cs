@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using LinuxDoku.GameJam1.Game.Entities;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
@@ -12,6 +14,7 @@ namespace LinuxDoku.GameJam1.Game {
         SpriteBatch spriteBatch;
 
         private Player _player;
+        private List<Shoot> _shoots; 
         private Boundary _viewport;
 
 
@@ -39,6 +42,7 @@ namespace LinuxDoku.GameJam1.Game {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _shoots = new List<Shoot>();
             _viewport = new Boundary() {
                 Width = GraphicsDevice.Viewport.Width,
                 Height = GraphicsDevice.Viewport.Height
@@ -62,8 +66,29 @@ namespace LinuxDoku.GameJam1.Game {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
                 Exit();
+            }
+
+            foreach (var shoot in _shoots) {
+                shoot.MoveByDirections(new [] { Direction.Up });
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
+                // create new shoot
+                var pos = _player.TopCenter();
+                var shoot = new Shoot {
+                    X = {
+                        Value = _player.X.Value + pos.X
+                    }, 
+                    Y = {
+                        Value = _player.Y.Value - 5
+                    }
+                };
+                shoot.Y.Speed[Direction.Up] = _player.Y.GetSpeed(Direction.Up) * 2.0f;
+
+                _shoots.Add(shoot);
+            }
 
             var distance = gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -80,10 +105,14 @@ namespace LinuxDoku.GameJam1.Game {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
-            // TODO: Add your drawing code here
-
             spriteBatch.Begin();
             spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
+            
+            // shoots
+            foreach (var shoot in _shoots) {
+                spriteBatch.Draw(shoot.GetTexture(GraphicsDevice), shoot.GetPosition());
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

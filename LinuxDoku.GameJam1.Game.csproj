@@ -39,6 +39,7 @@
     <Compile Include="Entities\Pixel.cs" />
     <Compile Include="Entities\PixelBitmap.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\Shoot.cs" />
     <Compile Include="Helper\SizeHelper.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Logic\Axis.cs" />

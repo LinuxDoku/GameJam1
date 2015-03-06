@@ -47,6 +47,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
                 if (Boundary != null && !Boundary.ValidateDirection(this, direction, distance)) {
                     distance = Boundary.GetMaxMovement(this, direction);
                     if (distance <= 0) {
+                        OnBoundaryCollide(direction);
                         return;
                     }
                 }
@@ -91,5 +92,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             }
             return colors;
         }
+
+        protected virtual void OnBoundaryCollide(Direction direction) {}
     }
 }
