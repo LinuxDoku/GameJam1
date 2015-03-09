@@ -120,7 +120,8 @@ namespace LinuxDoku.GameJam1.Game {
             }
 
             // hud
-            spriteBatch.DrawString(_font, string.Format("Shoots: {0}", GameState.Instance.ShootsAvailable.ToString("F2")), new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(_font, string.Format("Shoots: {0}", GameState.Instance.ShootsAvailable.ToString("000")), new Vector2(10, 10), Color.Black);
+            spriteBatch.DrawString(_font, string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")), new Vector2(_viewport.Width - 70, 10), Color.Black);
 
             spriteBatch.End();
 
