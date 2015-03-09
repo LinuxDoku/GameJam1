@@ -36,8 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\IHaveASize.cs" />
-    <Compile Include="Entities\Pixel.cs" />
-    <Compile Include="Entities\PixelBitmap.cs" />
+    <Compile Include="Entities\GameState.cs" />
+    <Compile Include="Entities\PixelBase.cs" />
+    <Compile Include="Entities\PixelBaseBitmapBase.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Shoot.cs" />
     <Compile Include="Helper\SizeHelper.cs" />
@@ -55,6 +56,7 @@
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

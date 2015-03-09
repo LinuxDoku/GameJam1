@@ -3,7 +3,7 @@ using LinuxDoku.GameJam1.Game.Texture;
 using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
-    public class Player : PixelBitmap {
+    public class Player : PixelBaseBitmapBase {
         public Player(int speed, Vector2 startPosition, bool centerStartPosition = true) {
             // bitmap
             Bitmap = new Bitmap(6, 11, 8);

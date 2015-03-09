@@ -12,15 +12,15 @@ namespace LinuxDoku.GameJam1.Game.Logic {
                    position.Y >= 0 && position.Y <= Height - height;
         }
 
-        public bool Validate(Pixel pixel) {
+        public bool Validate(PixelBase pixel) {
             return Validate(pixel.GetPosition());
         }
         
-        public bool ValidateDirection(Pixel pixel, Direction direction, float distance) {
+        public bool ValidateDirection(PixelBase pixel, Direction direction, float distance) {
             return GetMaxMovement(pixel, direction) >= distance;
         }
 
-        public float GetMaxMovement(Pixel pixel, Direction direction) {
+        public float GetMaxMovement(PixelBase pixel, Direction direction) {
             switch (direction) {
                 case Direction.Up:
                     return pixel.Y.Value;

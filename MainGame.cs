@@ -70,12 +70,15 @@ namespace LinuxDoku.GameJam1.Game {
                 Exit();
             }
 
+            // update game state
+            GameState.Instance.Update(gameTime);
+
             foreach (var shoot in _shoots) {
                 shoot.MoveByDirections(new [] { Direction.Up });
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
-                // create new shoot
+            // shoot
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestFire()) {
                 var pos = _player.TopCenter();
                 var shoot = new Shoot {
                     X = {

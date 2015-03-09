@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
-    public abstract class Pixel : IHaveASize {
-        protected Pixel() {
+    public abstract class PixelBase : IHaveASize {
+        protected PixelBase() {
             X = new Axis();
             Y = new Axis();
         }
