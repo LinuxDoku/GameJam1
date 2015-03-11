@@ -25,7 +25,7 @@ namespace LinuxDoku.GameJam1.Tests {
         }
 
         [Test]
-        public void Should_Not_Collide_To_Direct_Neightbour() {
+        public void Should_Not_Collide_To_Direct_Neighbour() {
             var result = Collision.AreColliding(
                 new TestPixel(100, 100, 300, 10),
                 new TestPixel(100, 100, 200, 10)
