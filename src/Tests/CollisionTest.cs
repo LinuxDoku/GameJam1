@@ -45,7 +45,7 @@ namespace LinuxDoku.GameJam1.Tests {
         }
 
         [Test]
-        public void Should_Collide_To_Each_Other() {
+        public void Should_Collide_On_Overlap() {
             var pixelA = new TestPixel(100, 100, 0, 0);
             var pixelB = new TestPixel(100, 50, 0, 0);
 
