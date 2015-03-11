@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contracts\IHaveASize.cs" />
+    <Compile Include="Entities\FrameStackItem.cs" />
     <Compile Include="Entities\GameState.cs" />
     <Compile Include="Entities\PixelBase.cs" />
     <Compile Include="Entities\PixelBaseBitmapBase.cs" />

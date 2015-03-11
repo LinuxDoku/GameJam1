@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public class GameState {
@@ -15,18 +17,33 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         public GameState() {
+            FrameStack = new List<FrameStackItem>();
+
             // initial game state
             ShootsAvailable = 20f;
-            ShootsRefillPerSecond = 1;
-            FiresPerSecond = 2;
+            ShootsRefillPerSecond = 3 ;
+            FiresPerSecond = 5;
         }
 
         public void Update(GameTime gameTime) {
             var elapsedSeconds = (float) gameTime.ElapsedGameTime.Milliseconds / 1000;
 
+            // player
             ShootsAvailable += elapsedSeconds * ShootsRefillPerSecond;
             FiresLastSecond -= elapsedSeconds * FiresPerSecond;
+
+            // frame stack
+            for (int i = 0; i < FrameStack.Count; i++) {
+                var frameStackItem = FrameStack[i];
+                frameStackItem.Execute();
+
+                if (frameStackItem.DeleteMe()) {
+                    FrameStack.Remove(frameStackItem);
+                }
+            }
         }
+
+        protected List<FrameStackItem> FrameStack { get; set; } 
 
         public float ShootsRefillPerSecond { get; protected set; }
         public float ShootsAvailable { get; protected set; }
@@ -45,6 +62,10 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         public bool CanFire() {
             return ShootsAvailable >= 1 && FiresLastSecond < FiresPerSecond;
+        }
+
+        public void RunTimes(int frames, Action<int, int> action) {
+            FrameStack.Add(new FrameStackItem(frames, action));
         }
     }
 }

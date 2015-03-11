@@ -13,7 +13,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             Bitmap.Map[2] = new short[] { 0, 2, 0, 0, 1, 1, 1, 0, 0, 2, 0 };
             Bitmap.Map[3] = new short[] { 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1 };
             Bitmap.Map[4] = new short[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            Bitmap.Map[5] = new short[] { 1, 0, 3, 0, 0, 0, 0, 3, 0, 0, 1 };
+            Bitmap.Map[5] = new short[] { 1, 0, 3, 0, 0, 0, 0, 0, 3, 0, 1 };
 
             Bitmap.Colors.Add(0, Color.Transparent);
             Bitmap.Colors.Add(1, Color.Black);
