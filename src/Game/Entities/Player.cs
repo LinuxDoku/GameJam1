@@ -1,8 +1,12 @@
-﻿using LinuxDoku.GameJam1.Game.Contracts;
+﻿using System.Collections.Generic;
+using LinuxDoku.GameJam1.Game.Contracts;
+using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
 using LinuxDoku.GameJam1.Game.Texture;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Net;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public class Player : PixelBaseBitmapBase {
@@ -44,6 +48,29 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         protected override Bitmap Bitmap { get; set; }
+
+        public override void Update(GameTime gameTime, List<PixelBase> objects) {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestShoot()) {
+                var pos = this.TopCenter();
+                var shoot = new Shoot {
+                    X = {
+                        Value = X.Value + pos.X
+                    },
+                    Y = {
+                        Value = Y.Value - 5
+                    },
+                    Boundary = Boundary
+                };
+                shoot.Y.Speed[Direction.Up] = Y.GetSpeed(Direction.Up) * 2.0f;
+                shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
+
+                GameState.Scene.Add(shoot);
+            }
+
+            MoveByDirections(Input.KeyboardToDirections(Keyboard.GetState()));
+
+            base.Update(gameTime, objects);
+        }
 
         protected override void OnCollide(Direction direction, PixelBase gameObject) {
             if (gameObject is Shoot) {

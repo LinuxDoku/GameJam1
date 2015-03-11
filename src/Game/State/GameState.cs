@@ -46,6 +46,7 @@ namespace LinuxDoku.GameJam1.Game.State {
 
         protected List<FrameStackItem> FrameStack { get; set; }
 
+        public SceneManager Scene { get; set; }
         public bool GameOver { get; protected set; }
 
         public float ShootsRefillPerSecond { get; protected set; }

@@ -2,6 +2,7 @@
 using System.Linq;
 using LinuxDoku.GameJam1.Game.Contracts;
 using LinuxDoku.GameJam1.Game.Logic;
+using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +11,12 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         protected PixelBase() {
             X = new Axis();
             Y = new Axis();
+
+            GameState = GameState.Instance;
+            Boundary = GameState.Scene.Boundary;
         }
+
+        protected GameState GameState { get; set; }
 
         public int Width { get; set; }
         public int Height { get; set; }
@@ -22,7 +28,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected Texture2D TextureCache { get; set; }
 
-        public virtual void Update(GameTime gameTime, IEnumerable<PixelBase> objects) {
+        public virtual void Update(GameTime gameTime, List<PixelBase> objects) {
             objects.ToList().ForEach(x => {
                 if (Collision.AreColliding(this, x)) {
                     OnCollide(Collision.GetDirection(this, x), x);

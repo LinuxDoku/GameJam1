@@ -14,7 +14,6 @@ namespace LinuxDoku.GameJam1.Game {
         private SpriteFont _font;
 
         private SceneManager _scene;
-        private Player _player;
         private Boundary _viewport;
 
 
@@ -34,15 +33,19 @@ namespace LinuxDoku.GameJam1.Game {
 
             _font = Content.Load<SpriteFont>("Font/Lucida Console");
 
-            _scene = new SceneManager();
             _viewport = new Boundary() {
                 Width = GraphicsDevice.Viewport.Width,
                 Height = GraphicsDevice.Viewport.Height
             };
 
-            _player = new Player(8, _viewport.LowerThird()) {
+            _scene = new SceneManager {
                 Boundary = _viewport
             };
+            GameState.Instance.Scene = _scene;
+
+            var player = new Player(8, _viewport.LowerThird());
+
+            _scene.Add(player);
         }
 
         /// <summary>
@@ -63,32 +66,10 @@ namespace LinuxDoku.GameJam1.Game {
             }
 
             if (!GameState.Instance.GameOver) {
-
                 // update game state
                 GameState.Instance.Update(gameTime);
 
-                _scene.Update(gameTime);
-
-                // shoot
-                if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestShoot()) {
-                    var pos = _player.TopCenter();
-                    var shoot = new Shoot {
-                        X = {
-                            Value = _player.X.Value + pos.X
-                        },
-                        Y = {
-                            Value = _player.Y.Value - 5
-                        },
-                        Boundary = _viewport
-                    };
-                    shoot.Y.Speed[Direction.Up] = _player.Y.GetSpeed(Direction.Up) * 2.0f;
-                    shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
-
-                    _scene.Add(shoot);
-                }
-
-                // move player
-                _player.MoveByDirections(Input.KeyboardToDirections(Keyboard.GetState()));
+                _scene.Update(gameTime);                
             }
             
             base.Update(gameTime);
@@ -107,8 +88,6 @@ namespace LinuxDoku.GameJam1.Game {
             if (GameState.Instance.GameOver) {
                 _spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
             }
-
-            _spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
             
             // scene
             _scene.Draw(_spriteBatch, GraphicsDevice);

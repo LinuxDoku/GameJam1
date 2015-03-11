@@ -13,7 +13,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         public Direction Direction { get; set; }
 
-        public override void Update(GameTime gameTime, IEnumerable<PixelBase> objects) {
+        public override void Update(GameTime gameTime, List<PixelBase> objects) {
             MoveShoot();
 
             base.Update(gameTime, objects);
