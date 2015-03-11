@@ -15,6 +15,8 @@ namespace LinuxDoku.GameJam1.Game.State {
         }
 
         public void Update(GameTime gameTime) {
+            GameTime = gameTime;
+
             var elapsedSeconds = (float) gameTime.ElapsedGameTime.Milliseconds / 1000;
 
             // scene
@@ -36,9 +38,11 @@ namespace LinuxDoku.GameJam1.Game.State {
         }
 
         protected List<FrameStackItem> FrameStack { get; set; }
-
         public SceneManager Scene { get; set; }
+
+        public GameTime GameTime { get; protected set; }
         public bool GameOver { get; protected set; }
+        public TimeSpan GameOverTime { get; set; }
 
         public float ShootsRefillPerSecond { get; protected set; }
         public float ShootsAvailable { get; protected set; }
@@ -65,6 +69,7 @@ namespace LinuxDoku.GameJam1.Game.State {
 
         public void ItsGameOver() {
             GameOver = true;
+            GameOverTime = GameTime.TotalGameTime;
         }
     }
 }

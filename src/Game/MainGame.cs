@@ -11,9 +11,10 @@ namespace LinuxDoku.GameJam1.Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private SpriteFont _font;
+        private SpriteFont _fontNormal;
 
         private GameState _gameState;
+        private SpriteFont _fontGameOver;
 
         public MainGame()
             : base() {
@@ -30,7 +31,8 @@ namespace LinuxDoku.GameJam1.Game {
             // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _font = Content.Load<SpriteFont>("Font/Lucida Console");
+            _fontNormal = Content.Load<SpriteFont>("Font/Normal");
+            _fontGameOver = Content.Load<SpriteFont>("Font/GameOver");
 
             var viewport = new Boundary {
                 Width = GraphicsDevice.Viewport.Width,
@@ -83,7 +85,7 @@ namespace LinuxDoku.GameJam1.Game {
             _spriteBatch.Begin();
 
             if (_gameState.GameOver) {
-                _spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
+                _spriteBatch.DrawString(_fontGameOver, "Game Over", new Vector2(200, 100), Color.Red);
             }
             
             // scene
@@ -91,14 +93,30 @@ namespace LinuxDoku.GameJam1.Game {
 
             // hud
             _spriteBatch.DrawString(
-                _font,
+                _fontNormal,
                 string.Format("Shots: {0}", _gameState.ShootsAvailable.ToString("000")),
                 new Vector2(10, 10),
                 Color.Black
             );
+
+            string hudGameTime = string.Empty;
+            if (_gameState.GameOver) {
+                hudGameTime = string.Format(
+                    "{0}:{1}", 
+                    _gameState.GameOverTime.Minutes.ToString("00"),
+                    _gameState.GameOverTime.Seconds.ToString("00")
+               );
+            } else {
+                hudGameTime = string.Format(
+                    "{0}:{1}",
+                    gameTime.TotalGameTime.Minutes.ToString("00"),
+                    gameTime.TotalGameTime.Seconds.ToString("00")
+                );
+            }
+
             _spriteBatch.DrawString(
-                _font, 
-                string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")),
+                _fontNormal, 
+                hudGameTime,
                 new Vector2(_gameState.Scene.Viewport.Width - 70, 10),
                 Color.Black
             );

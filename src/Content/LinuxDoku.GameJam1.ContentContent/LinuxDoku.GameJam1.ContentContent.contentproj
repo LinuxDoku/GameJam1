@@ -48,8 +48,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Font\Lucida Console.spritefont">
-      <Name>Lucida Console</Name>
+    <Compile Include="Font\Normal.spritefont">
+      <Name>Normal</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Font\GameOver.spritefont">
+      <Name>GameOver</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
