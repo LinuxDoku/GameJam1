@@ -1,5 +1,4 @@
-﻿using LinuxDoku.GameJam1.Game.Contracts;
-using LinuxDoku.GameJam1.Game.Helper;
+﻿using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using Microsoft.Xna.Framework;
 

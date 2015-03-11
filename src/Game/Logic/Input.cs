@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 
 namespace LinuxDoku.GameJam1.Game.Logic {
-    public class Input {
+    public static class Input {
         public static IEnumerable<Direction> KeyboardToDirections(KeyboardState state) {
             var directions = new List<Direction>();
 

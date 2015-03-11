@@ -38,6 +38,7 @@
     <Compile Include="Contracts\IGameObject.cs" />
     <Compile Include="Contracts\IHaveASize.cs" />
     <Compile Include="Helper\DirectionHelper.cs" />
+    <Compile Include="Logic\Collision.cs" />
     <Compile Include="State\FrameStackItem.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="Entities\PixelBase.cs" />

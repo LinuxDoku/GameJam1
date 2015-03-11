@@ -45,7 +45,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected override Bitmap Bitmap { get; set; }
 
-        protected override void OnCollide(Direction direction, IGameObject gameObject) {
+        protected override void OnCollide(Direction direction, PixelBase gameObject) {
             if (gameObject is Shoot) {
                 var shoot = gameObject as Shoot;
 

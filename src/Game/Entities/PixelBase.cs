@@ -21,6 +21,10 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected Texture2D TextureCache { get; set; }
 
+        public virtual void Update(GameTime gameTime, IEnumerable<PixelBase> objects) {
+            
+        }
+
         public Vector2 GetPosition() {
             return new Vector2(X.Value, Y.Value);
         }
@@ -93,7 +97,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             return colors;
         }
 
-        protected virtual void OnCollide(Direction direction, IGameObject gameObject) {}
+        protected virtual void OnCollide(Direction direction, PixelBase gameObject) { }
         protected virtual void OnBoundaryCollide(Direction direction) {}
     }
 }
