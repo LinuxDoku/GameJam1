@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LinuxDoku.GameJam1.Game {
     public class MainGame : Microsoft.Xna.Framework.Game {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
 
         private SpriteFont _font;
 
@@ -20,18 +20,8 @@ namespace LinuxDoku.GameJam1.Game {
 
         public MainGame()
             : base() {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-        }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize() {
-            base.Initialize();
         }
 
         /// <summary>
@@ -40,7 +30,7 @@ namespace LinuxDoku.GameJam1.Game {
         /// </summary>
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _font = Content.Load<SpriteFont>("Font/Lucida Console");
 
@@ -109,24 +99,25 @@ namespace LinuxDoku.GameJam1.Game {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
+            // background color
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
-            spriteBatch.Begin();
+            _spriteBatch.Begin();
 
             if (GameState.Instance.GameOver) {
-                spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
+                _spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
             }
 
-            spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
+            _spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
             
             // scene
-            _scene.Draw(spriteBatch, GraphicsDevice);
+            _scene.Draw(_spriteBatch, GraphicsDevice);
 
             // hud
-            spriteBatch.DrawString(_font, string.Format("Shots: {0}", GameState.Instance.ShootsAvailable.ToString("000")), new Vector2(10, 10), Color.Black);
-            spriteBatch.DrawString(_font, string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")), new Vector2(_viewport.Width - 70, 10), Color.Black);
+            _spriteBatch.DrawString(_font, string.Format("Shots: {0}", GameState.Instance.ShootsAvailable.ToString("000")), new Vector2(10, 10), Color.Black);
+            _spriteBatch.DrawString(_font, string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")), new Vector2(_viewport.Width - 70, 10), Color.Black);
 
-            spriteBatch.End();
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
