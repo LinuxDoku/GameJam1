@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using LinuxDoku.GameJam1.Game.Entities;
+﻿using LinuxDoku.GameJam1.Game.Entities;
 using LinuxDoku.GameJam1.Game.Logic;
 using NUnit.Framework;
 

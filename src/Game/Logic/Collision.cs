@@ -16,5 +16,10 @@ namespace LinuxDoku.GameJam1.Game.Logic {
 
             return true;
         }
+
+        public static Direction GetDirection(PixelBase pixelBase, PixelBase pixelBase1) {
+            // TODO: finish, works for now
+            return Direction.Up;
+        }
     }
 }

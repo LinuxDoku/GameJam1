@@ -1,4 +1,5 @@
-﻿using LinuxDoku.GameJam1.Game.Helper;
+﻿using System.Collections.Generic;
+using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using Microsoft.Xna.Framework;
 
@@ -11,6 +12,12 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         public Direction Direction { get; set; }
+
+        public override void Update(GameTime gameTime, IEnumerable<PixelBase> objects) {
+            MoveShoot();
+
+            base.Update(gameTime, objects);
+        }
 
         protected override void OnBoundaryCollide(Direction direction) {
             Direction = DirectionHelper.Inverse(direction);

@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using LinuxDoku.GameJam1.Game.Entities;
+﻿using LinuxDoku.GameJam1.Game.Entities;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Net;
 
 namespace LinuxDoku.GameJam1.Game {
     public class MainGame : Microsoft.Xna.Framework.Game {
@@ -15,8 +13,8 @@ namespace LinuxDoku.GameJam1.Game {
 
         private SpriteFont _font;
 
+        private SceneManager _scene;
         private Player _player;
-        private List<Shoot> _shoots; 
         private Boundary _viewport;
 
 
@@ -46,7 +44,7 @@ namespace LinuxDoku.GameJam1.Game {
 
             _font = Content.Load<SpriteFont>("Font/Lucida Console");
 
-            _shoots = new List<Shoot>();
+            _scene = new SceneManager();
             _viewport = new Boundary() {
                 Width = GraphicsDevice.Viewport.Width,
                 Height = GraphicsDevice.Viewport.Height
@@ -79,9 +77,7 @@ namespace LinuxDoku.GameJam1.Game {
                 // update game state
                 GameState.Instance.Update(gameTime);
 
-                foreach (var shoot in _shoots) {
-                    shoot.MoveShoot();
-                }
+                _scene.Update(gameTime);
 
                 // shoot
                 if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestShoot()) {
@@ -98,7 +94,7 @@ namespace LinuxDoku.GameJam1.Game {
                     shoot.Y.Speed[Direction.Up] = _player.Y.GetSpeed(Direction.Up) * 2.0f;
                     shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
 
-                    _shoots.Add(shoot);
+                    _scene.Add(shoot);
                 }
 
                 // move player
@@ -123,10 +119,8 @@ namespace LinuxDoku.GameJam1.Game {
 
             spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
             
-            // shoots
-            foreach (var shoot in _shoots) {
-                spriteBatch.Draw(shoot.GetTexture(GraphicsDevice), shoot.GetPosition());
-            }
+            // scene
+            _scene.Draw(spriteBatch, GraphicsDevice);
 
             // hud
             spriteBatch.DrawString(_font, string.Format("Shots: {0}", GameState.Instance.ShootsAvailable.ToString("000")), new Vector2(10, 10), Color.Black);

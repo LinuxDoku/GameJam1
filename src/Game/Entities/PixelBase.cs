@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using LinuxDoku.GameJam1.Game.Contracts;
 using LinuxDoku.GameJam1.Game.Logic;
 using Microsoft.Xna.Framework;
@@ -22,7 +23,11 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         protected Texture2D TextureCache { get; set; }
 
         public virtual void Update(GameTime gameTime, IEnumerable<PixelBase> objects) {
-            
+            objects.ToList().ForEach(x => {
+                if (Collision.AreColliding(this, x)) {
+                    OnCollide(Collision.GetDirection(this, x), x);
+                }
+            });
         }
 
         public Vector2 GetPosition() {
