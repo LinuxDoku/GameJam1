@@ -29,6 +29,9 @@ namespace LinuxDoku.GameJam1.Game.State {
         public void Update(GameTime gameTime) {
             var elapsedSeconds = (float) gameTime.ElapsedGameTime.Milliseconds / 1000;
 
+            // scene
+            Scene.Update(gameTime);
+
             // player
             ShootsAvailable += elapsedSeconds * ShootsRefillPerSecond;
             FiresLastSecond -= elapsedSeconds * FiresPerSecond;

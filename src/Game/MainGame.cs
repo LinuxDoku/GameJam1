@@ -13,14 +13,13 @@ namespace LinuxDoku.GameJam1.Game {
 
         private SpriteFont _font;
 
-        private SceneManager _scene;
-        private Boundary _viewport;
-
+        private GameState _gameState;
 
         public MainGame()
             : base() {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
         }
 
         /// <summary>
@@ -33,19 +32,19 @@ namespace LinuxDoku.GameJam1.Game {
 
             _font = Content.Load<SpriteFont>("Font/Lucida Console");
 
-            _viewport = new Boundary() {
+            var viewport = new Boundary {
                 Width = GraphicsDevice.Viewport.Width,
                 Height = GraphicsDevice.Viewport.Height
             };
-
-            _scene = new SceneManager {
-                Boundary = _viewport
+            
+            _gameState = new GameState {
+                Scene = new SceneManager {
+                    Boundary = viewport,
+                    Viewport = viewport
+                }
             };
-            GameState.Instance.Scene = _scene;
 
-            var player = new Player(8, _viewport.LowerThird());
-
-            _scene.Add(player);
+            _gameState.Scene.Add(new Player(_gameState, 8, _gameState.Scene.Viewport.LowerThird()));
         }
 
         /// <summary>
@@ -65,11 +64,9 @@ namespace LinuxDoku.GameJam1.Game {
                 Exit();
             }
 
-            if (!GameState.Instance.GameOver) {
+            if (!_gameState.GameOver) {
                 // update game state
-                GameState.Instance.Update(gameTime);
-
-                _scene.Update(gameTime);                
+                _gameState.Update(gameTime);
             }
             
             base.Update(gameTime);
@@ -85,16 +82,26 @@ namespace LinuxDoku.GameJam1.Game {
 
             _spriteBatch.Begin();
 
-            if (GameState.Instance.GameOver) {
+            if (_gameState.GameOver) {
                 _spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
             }
             
             // scene
-            _scene.Draw(_spriteBatch, GraphicsDevice);
+            _gameState.Scene.Draw(_spriteBatch, GraphicsDevice);
 
             // hud
-            _spriteBatch.DrawString(_font, string.Format("Shots: {0}", GameState.Instance.ShootsAvailable.ToString("000")), new Vector2(10, 10), Color.Black);
-            _spriteBatch.DrawString(_font, string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")), new Vector2(_viewport.Width - 70, 10), Color.Black);
+            _spriteBatch.DrawString(
+                _font,
+                string.Format("Shots: {0}", _gameState.ShootsAvailable.ToString("000")),
+                new Vector2(10, 10),
+                Color.Black
+            );
+            _spriteBatch.DrawString(
+                _font, 
+                string.Format("{0}:{1}", gameTime.TotalGameTime.Minutes.ToString("00"), gameTime.TotalGameTime.Seconds.ToString("00")),
+                new Vector2(_gameState.Scene.Viewport.Width - 70, 10),
+                Color.Black
+            );
 
             _spriteBatch.End();
 

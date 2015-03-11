@@ -6,7 +6,7 @@ namespace LinuxDoku.GameJam1.Tests {
     [TestFixture]
     public class CollisionTest {
         private class TestPixel : PixelBase {
-            public TestPixel(int width, int height, int x, int y) {
+            public TestPixel(int width, int height, int x, int y) : base(null) {
                 Width = width;
                 Height = height;
                 X.Value = x;

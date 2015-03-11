@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
+using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public class Shoot : PixelBase {
-        public Shoot() {
+        public Shoot(GameState gameState) : base(gameState) {
             Color = Color.Red;
             Width = 5;
             Height = 5;

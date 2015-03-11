@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using LinuxDoku.GameJam1.Game.Contracts;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
 using LinuxDoku.GameJam1.Game.Texture;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Net;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public class Player : PixelBaseBitmapBase {
-        public Player(int speed, Vector2 startPosition, bool centerStartPosition = true) {
+        public Player(GameState gameState, int speed, Vector2 startPosition, bool centerStartPosition = true) : base(gameState){
             // bitmap
             Bitmap = new Bitmap(6, 11, 8);
 
@@ -50,16 +48,15 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         protected override Bitmap Bitmap { get; set; }
 
         public override void Update(GameTime gameTime, List<PixelBase> objects) {
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestShoot()) {
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.RequestShoot()) {
                 var pos = this.TopCenter();
-                var shoot = new Shoot {
+                var shoot = new Shoot(GameState) {
                     X = {
                         Value = X.Value + pos.X
                     },
                     Y = {
                         Value = Y.Value - 5
-                    },
-                    Boundary = Boundary
+                    }
                 };
                 shoot.Y.Speed[Direction.Up] = Y.GetSpeed(Direction.Up) * 2.0f;
                 shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
@@ -76,7 +73,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             if (gameObject is Shoot) {
                 var shoot = gameObject as Shoot;
 
-                GameState.Instance.ItsGameOver();
+                GameState.ItsGameOver();
             }
         }
     }

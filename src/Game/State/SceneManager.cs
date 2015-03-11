@@ -13,6 +13,7 @@ namespace LinuxDoku.GameJam1.Game.State {
 
         protected List<PixelBase> Objects { get; set; }
         public Boundary Boundary { get; set; }
+        public Boundary Viewport { get; set; }
 
         public void Update(GameTime gameTime) {
             for (int i = 0; i < Objects.Count; i++) {

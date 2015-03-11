@@ -8,12 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public abstract class PixelBase : IGameObject {
-        protected PixelBase() {
+        protected PixelBase(GameState gameState) {
             X = new Axis();
             Y = new Axis();
 
-            GameState = GameState.Instance;
-            Boundary = GameState.Scene.Boundary;
+            GameState = gameState;
         }
 
         protected GameState GameState { get; set; }
@@ -22,7 +21,10 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         public int Height { get; set; }
         public Color Color { get; set; }
 
-        public Boundary Boundary { get; set; }
+        public virtual Boundary Boundary {
+            get { return GameState.Scene.Boundary; }
+        }
+
         public Axis X { get; set; }
         public Axis Y { get; set; }
 
