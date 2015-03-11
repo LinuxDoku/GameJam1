@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LinuxDoku.GameJam1.Game.Contracts;
+using LinuxDoku.GameJam1.Game.Helper;
+using LinuxDoku.GameJam1.Game.Logic;
+using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
     public class Shoot : PixelBase {
@@ -6,6 +9,16 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             Color = Color.Red;
             Width = 5;
             Height = 5;
+        }
+
+        public Direction Direction { get; set; }
+
+        protected override void OnBoundaryCollide(Direction direction) {
+            Direction = DirectionHelper.Inverse(direction);
+        }
+
+        public void MoveShoot() {
+            MoveByDirections(new [] { Direction });
         }
     }
 }

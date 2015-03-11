@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace LinuxDoku.GameJam1.Game.Entities {
+namespace LinuxDoku.GameJam1.Game.State {
     public class GameState {
         private static GameState _instance;
 
@@ -18,6 +18,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         public GameState() {
             FrameStack = new List<FrameStackItem>();
+            GameOver = false;
 
             // initial game state
             ShootsAvailable = 20f;
@@ -43,14 +44,16 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             }
         }
 
-        protected List<FrameStackItem> FrameStack { get; set; } 
+        protected List<FrameStackItem> FrameStack { get; set; }
+
+        public bool GameOver { get; protected set; }
 
         public float ShootsRefillPerSecond { get; protected set; }
         public float ShootsAvailable { get; protected set; }
         public float FiresPerSecond { get; protected set; }
         public float FiresLastSecond { get; protected set; }
 
-        public bool RequestFire() {
+        public bool RequestShoot() {
             if (CanFire()) {
                 FiresLastSecond += 1;
                 ShootsAvailable -= 1;
@@ -66,6 +69,10 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         public void RunTimes(int frames, Action<int, int> action) {
             FrameStack.Add(new FrameStackItem(frames, action));
+        }
+
+        public void ItsGameOver() {
+            GameOver = true;
         }
     }
 }

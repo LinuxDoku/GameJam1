@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
-    public abstract class PixelBase : IHaveASize {
+    public abstract class PixelBase : IGameObject {
         protected PixelBase() {
             X = new Axis();
             Y = new Axis();
@@ -93,6 +93,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             return colors;
         }
 
+        protected virtual void OnCollide(Direction direction, IGameObject gameObject) {}
         protected virtual void OnBoundaryCollide(Direction direction) {}
     }
 }

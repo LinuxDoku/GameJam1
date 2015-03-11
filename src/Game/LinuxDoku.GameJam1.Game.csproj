@@ -35,9 +35,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IGameObject.cs" />
     <Compile Include="Contracts\IHaveASize.cs" />
-    <Compile Include="Entities\FrameStackItem.cs" />
-    <Compile Include="Entities\GameState.cs" />
+    <Compile Include="Helper\DirectionHelper.cs" />
+    <Compile Include="State\FrameStackItem.cs" />
+    <Compile Include="State\GameState.cs" />
     <Compile Include="Entities\PixelBase.cs" />
     <Compile Include="Entities\PixelBaseBitmapBase.cs" />
     <Compile Include="Entities\Player.cs" />
@@ -50,6 +52,7 @@
     <Compile Include="Logic\Input.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="State\SceneManager.cs" />
     <Compile Include="Texture\Bitmap.cs" />
   </ItemGroup>
   <ItemGroup>

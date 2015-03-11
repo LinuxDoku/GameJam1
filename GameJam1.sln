@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxDoku.GameJam1.Game", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxDoku.GameJam1.Content", "src\Content\LinuxDoku.GameJam1.Content\LinuxDoku.GameJam1.Content.csproj", "{67A2BE9C-28B6-4E0B-8AEB-F3DF87A51A36}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "LinuxDoku.GameJam1.ContentContent", "src\Content\LinuxDoku.GameJam1.ContentContent\LinuxDoku.GameJam1.ContentContent.contentproj", "{9E273BD0-68E4-4C22-A2F9-CEFECC542293}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxDoku.GameJam1.ContentContent", "src\Content\LinuxDoku.GameJam1.ContentContent\LinuxDoku.GameJam1.ContentContent.contentproj", "{9E273BD0-68E4-4C22-A2F9-CEFECC542293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

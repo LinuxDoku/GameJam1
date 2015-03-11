@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LinuxDoku.GameJam1.Game.Entities {
+namespace LinuxDoku.GameJam1.Game.State {
     public class FrameStackItem {
         public FrameStackItem(int frames, Action<int, int> action) {
             Frames = frames;

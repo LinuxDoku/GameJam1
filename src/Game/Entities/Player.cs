@@ -1,4 +1,6 @@
-﻿using LinuxDoku.GameJam1.Game.Logic;
+﻿using LinuxDoku.GameJam1.Game.Contracts;
+using LinuxDoku.GameJam1.Game.Logic;
+using LinuxDoku.GameJam1.Game.State;
 using LinuxDoku.GameJam1.Game.Texture;
 using Microsoft.Xna.Framework;
 
@@ -42,5 +44,13 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         protected override Bitmap Bitmap { get; set; }
+
+        protected override void OnCollide(Direction direction, IGameObject gameObject) {
+            if (gameObject is Shoot) {
+                var shoot = gameObject as Shoot;
+
+                GameState.Instance.ItsGameOver();
+            }
+        }
     }
 }

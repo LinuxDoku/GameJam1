@@ -2,9 +2,11 @@
 using LinuxDoku.GameJam1.Game.Entities;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
+using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Net;
 
 namespace LinuxDoku.GameJam1.Game {
     public class MainGame : Microsoft.Xna.Framework.Game {
@@ -72,32 +74,37 @@ namespace LinuxDoku.GameJam1.Game {
                 Exit();
             }
 
-            // update game state
-            GameState.Instance.Update(gameTime);
+            if (!GameState.Instance.GameOver) {
 
-            foreach (var shoot in _shoots) {
-                shoot.MoveByDirections(new [] { Direction.Up });
+                // update game state
+                GameState.Instance.Update(gameTime);
+
+                foreach (var shoot in _shoots) {
+                    shoot.MoveShoot();
+                }
+
+                // shoot
+                if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestShoot()) {
+                    var pos = _player.TopCenter();
+                    var shoot = new Shoot {
+                        X = {
+                            Value = _player.X.Value + pos.X
+                        },
+                        Y = {
+                            Value = _player.Y.Value - 5
+                        },
+                        Boundary = _viewport
+                    };
+                    shoot.Y.Speed[Direction.Up] = _player.Y.GetSpeed(Direction.Up) * 2.0f;
+                    shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
+
+                    _shoots.Add(shoot);
+                }
+
+                // move player
+                _player.MoveByDirections(Input.KeyboardToDirections(Keyboard.GetState()));
             }
-
-            // shoot
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameState.Instance.RequestFire()) {
-                var pos = _player.TopCenter();
-                var shoot = new Shoot {
-                    X = {
-                        Value = _player.X.Value + pos.X
-                    }, 
-                    Y = {
-                        Value = _player.Y.Value - 5
-                    }
-                };
-                shoot.Y.Speed[Direction.Up] = _player.Y.GetSpeed(Direction.Up) * 2.0f;
-
-                _shoots.Add(shoot);
-            }
-
-            // move player
-            _player.MoveByDirections(Input.KeyboardToDirections(Keyboard.GetState()));
-
+            
             base.Update(gameTime);
         }
 
@@ -109,6 +116,11 @@ namespace LinuxDoku.GameJam1.Game {
             GraphicsDevice.Clear(Color.LightSkyBlue);
 
             spriteBatch.Begin();
+
+            if (GameState.Instance.GameOver) {
+                spriteBatch.DrawString(_font, "Game Over", new Vector2(200, 100), Color.Red);
+            }
+
             spriteBatch.Draw(_player.GetTexture(GraphicsDevice), _player.GetPosition());
             
             // shoots
