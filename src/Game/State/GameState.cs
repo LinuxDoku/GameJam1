@@ -4,18 +4,6 @@ using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.State {
     public class GameState {
-        private static GameState _instance;
-
-        public static GameState Instance {
-            get {
-                if (_instance == null) {
-                    _instance = new GameState();
-                }
-
-                return _instance;
-            }
-        }
-
         public GameState() {
             FrameStack = new List<FrameStackItem>();
             GameOver = false;
