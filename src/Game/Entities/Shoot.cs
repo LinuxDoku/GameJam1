@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LinuxDoku.GameJam1.Game.Helper;
+using LinuxDoku.GameJam1.Game.Contracts;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
@@ -11,6 +11,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         public Direction Direction { get; set; }
+        public ICanShoot Shooter { get; set; }
 
         public override int Width {
             get { return 5; }
@@ -28,8 +29,8 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected override void OnCollide(Direction direction, PixelBase gameObject) {
             if (gameObject is Enemy) {
-                var enemy = gameObject as Enemy;
                 Destroy();
+                Shooter.OnShotDestroyed(gameObject);
             }
         }
 

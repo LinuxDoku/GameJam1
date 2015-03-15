@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LinuxDoku.GameJam1.Game.Contracts;
 using LinuxDoku.GameJam1.Game.Helper;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
@@ -7,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace LinuxDoku.GameJam1.Game.Entities {
-    public class Player : PixelBaseBitmapBase {
+    public class Player : PixelBaseBitmapBase, ICanShoot {
         public Player(GameState gameState, int speed, Vector2 startPosition, bool centerStartPosition = true) : base(gameState){
             // bitmap
             Bitmap = new Bitmap(6, 11, 8);
@@ -52,7 +53,8 @@ namespace LinuxDoku.GameJam1.Game.Entities {
                     },
                     Y = {
                         Value = Y.Value - 5
-                    }
+                    },
+                    Shooter = this
                 };
                 shoot.Y.Speed[Direction.Up] = Y.GetSpeed(Direction.Up) * 2.0f;
                 shoot.Y.Speed[Direction.Down] = shoot.Y.Speed[Direction.Up];
@@ -66,11 +68,13 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         }
 
         protected override void OnCollide(Direction direction, PixelBase gameObject) {
-            if (gameObject is Shoot) {
-                var shoot = gameObject as Shoot;
-
+            if (gameObject is Shoot || gameObject is Enemy) {
                 GameState.ItsGameOver();
             }
+        }
+
+        public void OnShotDestroyed(PixelBase pixel) {
+            GameState.ShootsAvailable += 5;
         }
     }
 }

@@ -35,6 +35,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Contracts\ICanShoot.cs" />
     <Compile Include="Contracts\IGameObject.cs" />
     <Compile Include="Contracts\IHaveASize.cs" />
     <Compile Include="Entities\Enemy.cs" />

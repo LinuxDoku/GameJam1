@@ -13,7 +13,7 @@ namespace LinuxDoku.GameJam1.Game.State {
 
             // initial game state
             ShootsAvailable = 20f;
-            ShootsRefillPerSecond = 3 ;
+            ShootsRefillPerSecond = 1;
             FiresPerSecond = 5;
         }
 
@@ -57,7 +57,7 @@ namespace LinuxDoku.GameJam1.Game.State {
         public TimeSpan GameOverTime { get; set; }
 
         public float ShootsRefillPerSecond { get; protected set; }
-        public float ShootsAvailable { get; protected set; }
+        public float ShootsAvailable { get; set; }
         public float FiresPerSecond { get; protected set; }
         public float FiresLastSecond { get; protected set; }
 
