@@ -20,6 +20,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
         public abstract int Width { get; }
         public abstract int Height { get; }
         public Color Color { get; set; }
+        public bool DestroyFlag { get; set; }
 
         public virtual Boundary Boundary {
             get { return GameState.Scene.Boundary; }
@@ -30,13 +31,15 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected Texture2D TextureCache { get; set; }
 
-        public virtual void Update(GameTime gameTime, List<PixelBase> objects) {
+        public virtual void CollisionUpdate(GameTime gameTime, List<PixelBase> objects) {
             objects.ToList().ForEach(x => {
                 if (Collision.AreColliding(this, x)) {
                     OnCollide(Collision.GetDirection(this, x), x);
                 }
             });
-        }
+        } 
+
+        public virtual void Update(GameTime gameTime, List<PixelBase> objects) {}
 
         public Vector2 GetPosition() {
             return new Vector2(X.Value, Y.Value);
@@ -63,6 +66,7 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             if (axis != null) {
                 if (Boundary != null && !Boundary.ValidateDirection(this, direction, distance)) {
                     distance = Boundary.GetMaxMovement(this, direction);
+
                     if (distance <= 0) {
                         OnBoundaryCollide(direction);
                         return;
@@ -108,6 +112,10 @@ namespace LinuxDoku.GameJam1.Game.Entities {
                 colors[x] = Color;
             }
             return colors;
+        }
+
+        protected virtual void Destroy() {
+            DestroyFlag = true;
         }
 
         protected virtual void OnCollide(Direction direction, PixelBase gameObject) { }

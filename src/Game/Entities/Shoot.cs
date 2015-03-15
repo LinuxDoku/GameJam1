@@ -26,8 +26,15 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             base.Update(gameTime, objects);
         }
 
+        protected override void OnCollide(Direction direction, PixelBase gameObject) {
+            if (gameObject is Enemy) {
+                var enemy = gameObject as Enemy;
+                Destroy();
+            }
+        }
+
         protected override void OnBoundaryCollide(Direction direction) {
-            Direction = DirectionHelper.Inverse(direction);
+            Destroy();
         }
 
         public void MoveShoot() {

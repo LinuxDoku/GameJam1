@@ -27,10 +27,17 @@ namespace LinuxDoku.GameJam1.Game.State {
         public void Update(GameTime gameTime) {
             Level.Update(gameTime);
 
-            for (int i = 0; i < Objects.Count; i++) {
-                var obj = Objects[i];
-                obj.Update(gameTime, Objects.Where(x => x != obj).ToList());
-            }
+            // collision
+            Objects.ForEach(obj => obj.CollisionUpdate(gameTime, Objects.Where(x => x != obj).ToList()));
+
+            // cleanup destroyed elements
+            Objects.Where(x => x.DestroyFlag).ToList()
+                   .ForEach(obj => {
+                       Objects.Remove(obj);
+                   });
+
+            // update
+            Objects.ForEach(obj => obj.Update(gameTime, Objects.Where(x => x != obj).ToList()));
         }
 
         public void Draw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice) {
@@ -42,6 +49,10 @@ namespace LinuxDoku.GameJam1.Game.State {
 
         public void Add(PixelBase obj) {
             Objects.Add(obj);
+        }
+
+        public void Remove(PixelBase obj) {
+            Objects.Remove(obj);
         }
 
         public void Clear() {
