@@ -37,8 +37,12 @@
   <ItemGroup>
     <Compile Include="Contracts\IGameObject.cs" />
     <Compile Include="Contracts\IHaveASize.cs" />
+    <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Helper\DirectionHelper.cs" />
+    <Compile Include="Level\Level0.cs" />
+    <Compile Include="Level\LevelBase.cs" />
     <Compile Include="Logic\Collision.cs" />
+    <Compile Include="State\DelayedAction.cs" />
     <Compile Include="State\FrameStackItem.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="Entities\PixelBase.cs" />
@@ -72,6 +76,9 @@
       <Project>{67a2be9c-28b6-4e0b-8aeb-f3df87a51a36}</Project>
       <Name>LinuxDoku.GameJam1.Content</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Ai\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
 using Microsoft.Xna.Framework;
 
 namespace LinuxDoku.GameJam1.Game.State {
     public class GameState {
         public GameState() {
             FrameStack = new List<FrameStackItem>();
+            DelayedStack = new List<DelayedAction>();
             GameOver = false;
 
             // initial game state
@@ -35,9 +38,18 @@ namespace LinuxDoku.GameJam1.Game.State {
                     FrameStack.Remove(frameStackItem);
                 }
             }
+
+            // delayed stack
+            var delayedItems = DelayedStack.Where(x => x.Milliseconds <= gameTime.TotalGameTime.TotalMilliseconds).ToList();
+            for (int i = 0; i < delayedItems.Count; i++) {
+                var delayedStackItem = delayedItems[i];
+                delayedStackItem.Action(gameTime);
+                DelayedStack.Remove(delayedStackItem);
+            }
         }
 
         protected List<FrameStackItem> FrameStack { get; set; }
+        protected List<DelayedAction> DelayedStack { get; set; } 
         public SceneManager Scene { get; set; }
 
         public GameTime GameTime { get; protected set; }
@@ -65,6 +77,27 @@ namespace LinuxDoku.GameJam1.Game.State {
 
         public void RunTimes(int frames, Action<int, int> action) {
             FrameStack.Add(new FrameStackItem(frames, action));
+        }
+
+        public void RunInSeconds(float seconds, Action<GameTime> action) {
+            int delayTime = 0;
+
+            if (GameTime != null) {
+                delayTime = (int) (GameTime.TotalGameTime.TotalMilliseconds + (seconds * 1000));
+            }
+
+            DelayedStack.Add(new DelayedAction(delayTime, action));
+        }
+
+        public void RunEvery(float seconds, Action<GameTime> action) {
+            Action<GameTime> repeatingAction = null;
+
+            repeatingAction = time => {
+                action(time);
+                RunInSeconds(seconds, repeatingAction);
+            };
+
+            RunInSeconds(0, repeatingAction);
         }
 
         public void ItsGameOver() {

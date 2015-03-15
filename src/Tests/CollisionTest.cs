@@ -6,11 +6,22 @@ namespace LinuxDoku.GameJam1.Tests {
     [TestFixture]
     public class CollisionTest {
         private class TestPixel : PixelBase {
+            private int _width;
+            private int _height;
+
             public TestPixel(int width, int height, int x, int y) : base(null) {
-                Width = width;
-                Height = height;
+                _width = width;
+                _height = height;
                 X.Value = x;
                 Y.Value = y;
+            }
+
+            public override int Width {
+                get { return _width; }
+            }
+
+            public override int Height {
+                get { return _height; }
             }
         }
 

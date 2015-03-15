@@ -8,11 +8,17 @@ namespace LinuxDoku.GameJam1.Game.Entities {
     public class Shoot : PixelBase {
         public Shoot(GameState gameState) : base(gameState) {
             Color = Color.Red;
-            Width = 5;
-            Height = 5;
         }
 
         public Direction Direction { get; set; }
+
+        public override int Width {
+            get { return 5; }
+        }
+
+        public override int Height {
+            get { return 5; }
+        }
 
         public override void Update(GameTime gameTime, List<PixelBase> objects) {
             MoveShoot();

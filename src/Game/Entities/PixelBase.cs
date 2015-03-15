@@ -17,8 +17,8 @@ namespace LinuxDoku.GameJam1.Game.Entities {
 
         protected GameState GameState { get; set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public abstract int Width { get; }
+        public abstract int Height { get; }
         public Color Color { get; set; }
 
         public virtual Boundary Boundary {

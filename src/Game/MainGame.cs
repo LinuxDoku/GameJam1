@@ -1,5 +1,7 @@
-﻿using LinuxDoku.GameJam1.Game.Entities;
+﻿using System.Xml;
+using LinuxDoku.GameJam1.Game.Entities;
 using LinuxDoku.GameJam1.Game.Helper;
+using LinuxDoku.GameJam1.Game.Level;
 using LinuxDoku.GameJam1.Game.Logic;
 using LinuxDoku.GameJam1.Game.State;
 using Microsoft.Xna.Framework;
@@ -38,12 +40,11 @@ namespace LinuxDoku.GameJam1.Game {
                 Width = GraphicsDevice.Viewport.Width,
                 Height = GraphicsDevice.Viewport.Height
             };
-            
-            _gameState = new GameState {
-                Scene = new SceneManager {
-                    Boundary = viewport,
-                    Viewport = viewport
-                }
+
+            _gameState = new GameState();
+            _gameState.Scene = new SceneManager(new Level0(_gameState)) {
+                Boundary = viewport,
+                Viewport = viewport
             };
 
             _gameState.Scene.Add(new Player(_gameState, 8, _gameState.Scene.Viewport.LowerThird()));

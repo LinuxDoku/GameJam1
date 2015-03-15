@@ -25,10 +25,6 @@ namespace LinuxDoku.GameJam1.Game.Entities {
             Bitmap.Colors.Add(3, Color.Orange);
             Bitmap.Colors.Add(4, Color.DarkGray);
 
-            // size
-            Width = Bitmap.GetWidth();
-            Height = Bitmap.GetHeight();
-
             // speed
             Y.Speed.Add(Direction.Up, speed);
             Y.Speed.Add(Direction.Down, speed / 1.7f);
